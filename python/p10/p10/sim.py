@@ -1,31 +1,22 @@
+import operator as op
 from fileinput import input
-from itertools import chain, count, accumulate
-from more_itertools import take
+from itertools import chain, count, accumulate, takewhile
 
-print(list(take(6, (
-    # i * x[i]
-    (i, x[i])
-    for x in [list(accumulate(
-        chain([1], *map(
-            lambda x: next(
-                [0, int(x[1])] if x[0] == 'addx' else [0]
-                for x in [x.strip().split()]
-            ),
-            list(input())
-        )),
-        lambda s, x: s + x
-    ))]
-    # for i in count(20, 40)
-    for i in count(20, 40)
-))))
+sim = list(accumulate(
+    chain([1], *map(
+        lambda x: next(
+            [0, int(x[1])] if x[0] == 'addx' else [0]
+            for x in [x.strip().split()]
+        ),
+        list(input())
+    )),
+    op.add
+))
 
-# accumulate(
-#     chain([1], map(
-#         lambda x: next(
-#             [0, int(x[1])] if x[0] == 'addx' else [0]
-#             for x in [x.strip().split()]
-#         ),
-#         list(input())
-#     )),
-#     lambda s, x: s + x
-# )
+print(sum(map(
+    lambda i: i * sim[i - 1],
+    takewhile(
+        lambda i: i < len(sim),
+        count(20, 40)
+    )
+)))
