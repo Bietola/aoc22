@@ -7,18 +7,36 @@ inp =: fread <'test'
 
 strsplit=: #@[ }.each [ (E. <;.1 ]) ,
 
-'hello' = 'hello'
+'hello' -: 'hello'
 
 parse =: monad define
-for_i. >LF strsplit y do.
-    if. i -: 'noop' do.
-        echo 0
-    else.
-        echo 1
+    res =. 1
+    for_i. >LF cut y do.
+        i =. deb i
+        if. i -: 'noop' do.
+            res =. res , 0
+        else. 
+            res =. res , 0 , 0".>1{cut i
+        end.
     end.
-end.
+    res
 )
 
-0 ". 'addx 10'
++/\parse inp
 
-NB. 'addx \d+' rxmatch 'addx 1 noop noop addx 2 addx 3'
+d2c =: monad define
+    acc =. y
+    i =. 5
+    res =. ''
+    while. (acc > 0) do.
+        res =. res , (48 + 10|acc){a.
+        acc =. <. acc % 10
+    end.
+    |. res
+)
+
+echo 'hello: ', d2c 1034
+
+1 2 3; 'hello'
+
+parse inp
