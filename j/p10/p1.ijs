@@ -1,4 +1,4 @@
 1!:44 '/home/dincio/code/aoc22/j/p10'
 inp =: fread <'input'
 inp =: 1,;0&".each[LF cut inp NB. Parse
-+/ (* {&(+/\inp) @ +&_1) 20+40*i.6
+LF (40*i.6) } [(": <&2 | (40|i.#inp) - (+/\inp)) rplc '1';'#';'0';'.';' ';''
