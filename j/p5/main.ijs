@@ -23,3 +23,16 @@ d=:0
 ]di=:_1++/' '=(<a:;d){stk
 NB. re(,<(2-di+i.#re);d)}' '(<(ri+i.n);s)}stk
 re(,<di;d)}' '(<(ri+i.n);s)}stk
+
+solve =: {{
+    stk =. 0{x
+    n =. 1{x
+    s =. 2{x
+    d =. 3{x
+
+    i =. _1-i.n
+    mv =. i{s{stk
+    ,&mv d} n&}: s} stk
+}}
+
++&1 (0}) 1 7 2
