@@ -11,32 +11,14 @@ move 1 from 1 to 2
 )
 inp=:LF cut inp
 
-stk=:3{.inp
-stk=:3 3$;(1+4*i.3)&{each stk
-NB. stk=:(1+4*i.3)&{each stk
-stk
+cstk =: 3{.inp
+cstk=:3 3$;(1+4*i.3)&{each cstk
 
-solve =: {{
-    stk =. 0{y
-    n =. >1{y
-    s =. >2{y
-    d =. >3{y
-    i =. _1-i.n
-    stk
-    NB. mv =. i{s{stk
-    NB. mv
-}}
-solve ('ZN';'MCD';'P');1;0;2
-
-stk
-('ZN';'MCD'; 'P')
-
-M =: {{
-    sel =. x@.0
-    mod =. x@.1
-    (mod (sel y){y) (sel y)} y
-}}
-1 0 2"_`(1&+) M 1 7 3
-
-i =: _1-i.n
-
+stk=:deb each<"1|."1|:cstk
+n =. 1
+s =. 1
+d =. 2
+i =. _1-i.n
+mv =. i{>s{stk
+stk;cstk
+(<,&mv>d{stk) d} (<(-n)}.>s{stk) s} stk
