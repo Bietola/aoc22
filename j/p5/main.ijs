@@ -10,7 +10,7 @@ prg =: (0 _1 _1)&+ each ({~ [:I. ~:&0) each 0&". each prg
 prg
 
 cstk =: 8{.inp
-cstk =: 8 9$;(1+4*i.3)&{each cstk
+cstk =: 8 9$;(1+4*i.9)&{each cstk
 stk =: deb each<"1|."1|:cstk
 stk
 
@@ -27,4 +27,4 @@ solve =: monad define
     end.
     stk
 )
-solve (stk;<prg)
+;,{:each solve (stk;<prg)
