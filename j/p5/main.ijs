@@ -10,7 +10,10 @@ prg =: (0 _1 _1)&+ each ({~ [:I. ~:&0) each 0&". each prg
 prg
 
 cstk =: 8{.inp
-cstk =: 8 9$;(1+4*i.9)&{each cstk
+NB. x =: 9 %~ #>{.cstk
+xb =: >. 4 %~ #>{.cstk
+yb =: #cstk
+cstk =: (yb,xb)$;(1+4*i.xb)&{each cstk
 stk =: deb each<"1|."1|:cstk
 stk
 
