@@ -2,20 +2,37 @@
 inp=:LF cut fread'input'
 3 3$inp
 
-load'regex'
 prg =: 9}.inp
-NB. prg =: 4 3$0".;,&' ' each ;'\d+'&rxall each prg
-NB. prg =: ({~ (~:&0)) each 0&". each prg
 prg =: (0 _1 _1)&+ each ({~ [:I. ~:&0) each 0&". each prg
 prg
 
 cstk =: 8{.inp
-NB. x =: 9 %~ #>{.cstk
 xb =: >. 4 %~ #>{.cstk
 yb =: #cstk
 cstk =: (yb,xb)$;(1+4*i.xb)&{each cstk
 stk =: deb each<"1|."1|:cstk
 stk
+
+{{ {~ 0= 2&| y }} i. 3 3
+
+mod =: monad define
+    y =. 0
+)
+y =: 1
+y
+mod y
+y
+
+stk=:1 2 3
+pop=:{{
+    ret=.". '|.(-y){.',x
+    ". x,'=:(-y)}.',x
+    ret
+}}
+
+put=:{{
+    ". x,'=:',x,',y'
+}}
 
 solve =: monad define
     stk =. >0{y
