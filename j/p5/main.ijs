@@ -50,20 +50,23 @@ stk;prg
 
 |.stk;prg
 {{
-    stk =. >y
-    n =. 0{>x
+    stk =. y
+    a =. 0{>x
     s =. 1{>x
     d =. 2{>x
-    mv=.|.(-n){.>s{stk
-    < d"_`(,&mv) Mb s"_`((-n)&}.) Mb stk
+    NB. echo 'DB:';(<x);(<y)
+    mv=.|.(-a){.>s{stk
+    < d"_`(,&mv) Mb s"_`((-a)&}.) Mb stk
 }}&> / |.stk;prg
 
 |.stk;prg
 {{
-    n =. 1
+    s =. 1
     echo 'DB:';(<x);(<y)
     <y solve x
 }}&> / |.stk;prg
 NB. {:every solve (stk;<prg)
+
+]F.:{{ x }} 1 2 3
 
 {{n =. 1}} / 1 2 3
