@@ -38,16 +38,6 @@ solve =: dyad define
     d"_`(,&mv) Mb s"_`((-n)&}.) Mb stk
 )
 
-Fb =: {{
-    ret =. >0{y
-    for_i. {.y do.
-        ret =. ret x >i
-    end.
-    ret
-}}
-{{  }} Fb (1;'2';'3')
-
-NB. {{ y + 0".x }}&> / ('3';'2';1)
 (+ 0&".)~&> /|. 1;'3';'2'
 
 1&,&*: 1 2 3
@@ -60,7 +50,20 @@ stk;prg
 
 |.stk;prg
 {{
+    stk =. >y
+    n =. 0{>x
+    s =. 1{>x
+    d =. 2{>x
+    mv=.|.(-n){.>s{stk
+    < d"_`(,&mv) Mb s"_`((-n)&}.) Mb stk
+}}&> / |.stk;prg
+
+|.stk;prg
+{{
+    n =. 1
     echo 'DB:';(<x);(<y)
     <y solve x
 }}&> / |.stk;prg
 NB. {:every solve (stk;<prg)
+
+{{n =. 1}} / 1 2 3
