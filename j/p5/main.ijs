@@ -24,28 +24,43 @@ Mb =: {{
     sel =. x@.0
     mod =. x@.1
     NB. (sel`(<@:mod@:>)) M x
+    NB. echo 'DB:';y;(sel y)
     (mod each (sel y){y) (sel y)} y
 }}
 (1:`*:) Mb (1;2;3)
 
-n=:2
-s=:1
-d=:3
-mv=:|.(-n){.>s{stk
-stk
-d"_`(,&mv) Mb s"_`((-n)&}.) Mb stk
-
-solve =: monad define
-    stk =. >0{y
-    prg =. >1{y
-    for_cmd. prg do.
-        cmd =. >cmd
-        n =. 0{cmd
-        s =. 1{cmd
-        d =. 2{cmd
-        mv=.|.(-n){.>s{stk
-        stk =. d"_`(,&mv) Mb s"_`((-n)&}.) Mb stk
-    end.
-    stk
+solve =: dyad define
+    stk =. x
+    n =. 0{y
+    s =. 1{y
+    d =. 2{y
+    mv=.|.(-n){.>s{stk
+    d"_`(,&mv) Mb s"_`((-n)&}.) Mb stk
 )
-{:every solve (stk;<prg)
+
+Fb =: {{
+    ret =. >0{y
+    for_i. {.y do.
+        ret =. ret x >i
+    end.
+    ret
+}}
+{{  }} Fb (1;'2';'3')
+
+NB. {{ y + 0".x }}&> / ('3';'2';1)
+(+ 0&".)~&> /|. 1;'3';'2'
+
+1&,&*: 1 2 3
+
+stk=:'ABC';'GF'
+prg=:1 0 1;2 1 0
+stk;prg
+
+('ABC';'GF') solve 1 0 1
+
+|.stk;prg
+{{
+    echo 'DB:';(<x);(<y)
+    <y solve x
+}}&> / |.stk;prg
+NB. {:every solve (stk;<prg)
