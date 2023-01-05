@@ -28,7 +28,27 @@ Mb =: {{
 }}
 (1:`*:) Mb (1;2;3)
 
-{: every > {{
+solve =: dyad define
+    stk =. x
+    n =. 0{y
+    s =. 1{y
+    d =. 2{y
+    mv=.|.(-n){.>s{stk
+    d"_`(,&mv) Mb s"_`((-n)&}.) Mb stk
+)
+
+(+ 0&".)~&> /|. 1;'3';'2'
+
+1&,&*: 1 2 3
+
+stk=:'ABC';'GF'
+prg=:1 0 1;2 1 0
+stk;prg
+
+('ABC';'GF') solve 1 0 1
+
+|.stk;prg
+{{
     stk =. y
     a =. 0{>x
     s =. 1{>x
@@ -37,3 +57,15 @@ Mb =: {{
     mv=.|.(-a){.>s{stk
     < d"_`(,&mv) Mb s"_`((-a)&}.) Mb stk
 }}&> / |.stk;prg
+
+|.stk;prg
+{{
+    s =. 1
+    echo 'DB:';(<x);(<y)
+    <y solve x
+}}&> / |.stk;prg
+NB. {:every solve (stk;<prg)
+
+]F.:{{ x }} 1 2 3
+
+{{n =. 1}} / 1 2 3
