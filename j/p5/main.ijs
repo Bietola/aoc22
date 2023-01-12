@@ -28,6 +28,15 @@ Mb =: {{
 }}
 (1:`*:) Mb (1;2;3)
 
+stk =: 1 2 3;3;(>a:);2 0
+stk
+put =: dyad define
+    s =. (x@.0) 0
+    l =. x@.1
+    echo s,' =: l`(,&y) Mb ',s
+)
+('stk'"_`1:) put 1
+
 {: every > {{
     stk =. y
     a =. 0{>x
@@ -37,3 +46,4 @@ Mb =: {{
     mv=.|.(-a){.>s{stk
     < d"_`(,&mv) Mb s"_`((-a)&}.) Mb stk
 }}&> / |.stk;prg
+
