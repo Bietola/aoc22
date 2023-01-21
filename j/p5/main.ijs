@@ -37,6 +37,7 @@ put =: dyad define
 )
 ('stk'"_`1:) put 1
 
+NB. Part 1
 {: every > {{
     stk =. y
     a =. 0{>x
@@ -47,3 +48,4 @@ put =: dyad define
     < d"_`(,&mv) Mb s"_`((-a)&}.) Mb stk
 }}&> / |.stk;prg
 
+NB. Part 2
