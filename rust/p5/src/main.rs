@@ -1,9 +1,9 @@
 use std::iter;
 use std::fs;
-use ndarray::{Array1, Array2};
-use ndarray::s;
+use ndarray::{Array1, Array2, s};
 use regex::Regex;
 use single::Single;
+use itertools::Itertools;
 
 fn main() {
     let inp = fs::read_to_string("assets/input").unwrap();
@@ -37,12 +37,14 @@ fn main() {
             .flatten()
             .collect::<Vec<_>>()
     ).unwrap().reversed_axes().slice_move(s![.., ..;-1]);
-    let stk: Vec<_> = stk.into_outer_iter()
-        .map(Array1::into_raw_vec)
-        .map(String::from)
+
+    println!("{:?}", stk);
+
+    let mut stk: Vec<_> = stk.outer_iter()
+        .map(|a| a.into_iter().collect::<String>().trim_end().to_owned())
         .collect();
 
-    println!("{:#?}", stk);
+    println!("{:?}", stk);
 
     // let mut stk = vec![
     //     vec!['A', 'B', 'C'],
