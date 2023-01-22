@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 ndarray = "*"
+regex = "1.7.1"
+single = "1.0.1"

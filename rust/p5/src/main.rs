@@ -1,12 +1,18 @@
 use std::iter;
 use std::fs;
-use ndarray as nd;
+use ndarray::{Array1, Array2};
 use ndarray::s;
+use regex::Regex;
+use single::Single;
 
 fn main() {
     let inp = fs::read_to_string("assets/input").unwrap();
-
-    let str_stk = inp.split("\n").take(8).collect::<Vec<_>>();
+    let inp: Vec<_> = inp.split("\n").collect();
+    let str_stk: Vec<_> = inp.iter().take(8).collect();
+    let str_prg: Vec<_> = inp.iter().skip(10).collect();
+    let str_prg = str_prg.split_last().unwrap().1;
+    let re = Regex::new(r"move (\d+) from (\d+) to (\d+)").unwrap();
+    // println!("{:#?}", re.captures_iter(str_prg[0]).single().unwrap());
 
     println!("{:#?}",
         str_stk
@@ -16,20 +22,9 @@ fn main() {
             // .collect::<Vec<_>>()
     );
 
-    // println!("{:?}", 
-    //     str_stk
-    //         .iter()
-    //         .map(|line| line.chars()
-    //             .enumerate()
-    //             .filter_map(|(i, c)|
-    //                 i.checked_sub(1).filter(|x| x % 4 == 0).map(|_| c)
-    //             )
-    //             .collect::<Vec<_>>()
-    //         )
-    //         .collect::<Vec<_>>()
-    // );
+    // println!("{:#?}", str_prg);
 
-    println!("{:#?}", nd::Array2::from_shape_vec(
+    let stk = Array2::from_shape_vec(
         (8, 9),
         str_stk
             .iter()
@@ -41,7 +36,13 @@ fn main() {
             )
             .flatten()
             .collect::<Vec<_>>()
-    ).unwrap().t().slice(s![.., ..;-1]));
+    ).unwrap().reversed_axes().slice_move(s![.., ..;-1]);
+    let stk: Vec<_> = stk.into_outer_iter()
+        .map(Array1::into_raw_vec)
+        .map(String::from)
+        .collect();
+
+    println!("{:#?}", stk);
 
     // let mut stk = vec![
     //     vec!['A', 'B', 'C'],
