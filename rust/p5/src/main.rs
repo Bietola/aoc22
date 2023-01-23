@@ -1,18 +1,16 @@
-use std::iter;
 use std::fs;
 use ndarray::{Array1, Array2, s};
 use regex::Regex;
 use single::Single;
-use itertools::Itertools;
+use std::iter;
 
 fn main() {
     let inp = fs::read_to_string("assets/input").unwrap();
     let inp: Vec<_> = inp.split("\n").collect();
     let str_stk: Vec<_> = inp.iter().take(8).collect();
     let str_prg: Vec<_> = inp.iter().skip(10).collect();
-    let str_prg = str_prg.split_last().unwrap().1;
+    let str_prg = str_prg.split_last().unwrap().1.to_owned();
     let re = Regex::new(r"move (\d+) from (\d+) to (\d+)").unwrap();
-    // println!("{:#?}", re.captures_iter(str_prg[0]).single().unwrap());
 
     println!("{:#?}",
         str_stk
@@ -46,23 +44,25 @@ fn main() {
 
     println!("{:?}", stk);
 
-    // let mut stk = vec![
-    //     vec!['A', 'B', 'C'],
-    //     vec!['D'],
-    //     vec!['E', 'F'],
-    // ];
+    let prg = str_prg.iter().map(|s| re.captures(s));
 
-    // let prog = vec![
-    //     (1, 1, 2),
-    //     (1, 2, 1),
-    // ];
+    for cmd in prg {
+        let n: usize = cmd.as_ref().unwrap().get(1).unwrap().as_str().parse().unwrap();
+        let s: usize = cmd.as_ref().unwrap().get(2).unwrap().as_str().parse().unwrap();
+        let d: usize = cmd.as_ref().unwrap().get(3).unwrap().as_str().parse().unwrap();
 
-    // for (n, s, d) in prog {
-    //     let mv: Vec<_> = iter::repeat_with(|| stk[s].pop().unwrap())
-    //         .take(n)
-    //         .collect();
-    //     stk[d].extend(mv);
-    // }
+        let s = s - 1;
+        let d = d - 1;
 
-    // println!("{:?}", stk);
+        println!("{:?}", (n, s, d));
+        let mv: Vec<_> = iter::repeat_with(|| stk[s].pop().unwrap())
+            .take(n)
+            .collect();
+
+        stk[d].extend(mv);
+
+        println!("{:?}", stk);
+    }
+
+    println!("{:?}", stk.iter().map(|s| &s[s.len()-1..]).collect::<String>());
 }
