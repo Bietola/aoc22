@@ -1,7 +1,6 @@
 use std::fs;
-use ndarray::{Array1, Array2, s};
+use ndarray::{Array2, s};
 use regex::Regex;
-use single::Single;
 use std::iter;
 
 fn main() {
@@ -12,15 +11,7 @@ fn main() {
     let str_prg = str_prg.split_last().unwrap().1.to_owned();
     let re = Regex::new(r"move (\d+) from (\d+) to (\d+)").unwrap();
 
-    println!("{:#?}",
-        str_stk
-            // .iter()
-            // .map(|s| s.trim())
-            // .map(|line| line.chars().enumerate().collect::<Vec<(usize, _)>>())
-            // .collect::<Vec<_>>()
-    );
-
-    // println!("{:#?}", str_prg);
+    println!("{:#?}", str_stk);
 
     let stk = Array2::from_shape_vec(
         (8, 9),
@@ -54,15 +45,12 @@ fn main() {
         let s = s - 1;
         let d = d - 1;
 
-        println!("{:?}", (n, s, d));
         let mv: Vec<_> = iter::repeat_with(|| stk[s].pop().unwrap())
             .take(n)
             .collect();
 
         stk[d].extend(mv);
-
-        println!("{:?}", stk);
     }
 
-    println!("{:?}", stk.iter().map(|s| &s[s.len()-1..]).collect::<String>());
+    println!("{}", stk.iter().map(|s| &s[s.len()-1..]).collect::<String>());
 }
