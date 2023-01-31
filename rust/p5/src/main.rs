@@ -1,9 +1,9 @@
 use std::fs;
 use ndarray::{Array2, s};
 use regex::Regex;
-use std::iter;
+use std::{iter, error::Error};
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let inp = fs::read_to_string("assets/input").unwrap();
     let inp: Vec<_> = inp.split("\n").collect();
     let str_stk: Vec<_> = inp.iter().take(8).collect();
@@ -38,9 +38,11 @@ fn main() {
     let prg = str_prg.iter().map(|s| re.captures(s));
 
     for cmd in prg {
-        let n: usize = cmd.as_ref().unwrap().get(1).unwrap().as_str().parse().unwrap();
-        let s: usize = cmd.as_ref().unwrap().get(2).unwrap().as_str().parse().unwrap();
-        let d: usize = cmd.as_ref().unwrap().get(3).unwrap().as_str().parse().unwrap();
+        let get_caps = |n| cmd.as_ref().unwrap().get(n).unwrap()
+            .as_str().parse::<usize>().unwrap();
+        let s = get_caps(1);
+        let n = get_caps(2);
+        let d = get_caps(3);
 
         let s = s - 1;
         let d = d - 1;
@@ -53,4 +55,6 @@ fn main() {
     }
 
     println!("{}", stk.iter().map(|s| &s[s.len()-1..]).collect::<String>());
+
+    Ok(())
 }
